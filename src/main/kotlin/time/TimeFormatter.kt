@@ -11,39 +11,48 @@ class TimeFormatter {
 
         var timeInWords = ""
         var remainingSeconds = 0
-        var count = 0
+        var countUnitsToDisplay = 0
+        var resultsToFormat = mapOf(Pair("",0))
     }
 
 
     fun timeFormat(input: Int?): String {
-        if (input == null) return "none"
+            if (input == null) return "none"
+
         resetVariables(input)
 
-        val resultsToFormat = mapOf(
-            Pair("year", calculateUnit(yearInSeconds)),
-            Pair("day", calculateUnit(dayInSeconds)),
-            Pair("hour", calculateUnit(hourInSeconds)),
-            Pair("minute", calculateUnit(minuteInSeconds)),
-            Pair("second", calculateUnit(second))
-        )
+        resultsToFormat = formatResults()
 
-        count = resultsToFormat.count { it.value != 0 }
-        if (count == 0) return "none"
+        countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
+            if (countUnitsToDisplay == 0) return "none"
 
         resultsToFormat.forEach { timeInWords += formatUnits(it.key, it.value) }
 
         return timeInWords
     }
 
+
+    private fun formatResults(): Map<String, Int> {
+        return mapOf(
+            Pair("year", calculateUnit(yearInSeconds)),
+            Pair("day", calculateUnit(dayInSeconds)),
+            Pair("hour", calculateUnit(hourInSeconds)),
+            Pair("minute", calculateUnit(minuteInSeconds)),
+            Pair("second", calculateUnit(second))
+        )
+    }
+
     private fun resetVariables(input: Int) {
         timeInWords = ""
         remainingSeconds = input
+        countUnitsToDisplay = 0
+        resultsToFormat
     }
 
     private fun formatUnits(unitkey: String, unitvalue: Int): String {
         if (unitvalue == 0) return ""
-            count -= 1
-            return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(count)
+            countUnitsToDisplay -= 1
+            return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
     }
 
     private fun plural(unit: Int): String {

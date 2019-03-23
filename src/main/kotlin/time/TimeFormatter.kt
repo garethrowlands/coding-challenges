@@ -23,11 +23,11 @@ class TimeFormatter {
         resetVariables(input)
 
         val resultsToFormat = formatResults()
+                .filterValues { it!=0 }
 
         var countUnitsToDisplay = 0
 
         fun formatUnits(unitkey: String, unitvalue: Int): String {
-            if (unitvalue == 0) return ""
             countUnitsToDisplay -= 1
             return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
         }

@@ -1,0 +1,11 @@
+.gradle/
+.idea/
+app/build/
+build/
+/search-service.iml
+**/.DS_Store
+classes/
+bin/
+out/
+.classpath
+.project

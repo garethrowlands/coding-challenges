@@ -17,10 +17,6 @@ class TimeFormatter {
         val resultsToFormat = TimeCalculator(input).formatResults()
                 .filter { it.second!=0 }
 
-        fun formatUnits(unitkey: String, unitvalue: Int): String {
-            return "$unitvalue $unitkey" + plural(unitvalue)
-        }
-
         val unitsAndCountsFormatted = resultsToFormat
                 .map { (unit, unitCount) ->
                     formatUnits(unit, unitCount)
@@ -28,6 +24,10 @@ class TimeFormatter {
         val timeInWords = toStringWithCommasAndAnd(unitsAndCountsFormatted)
 
         return timeInWords
+    }
+
+    fun formatUnits(unitkey: String, unitvalue: Int): String {
+        return "$unitvalue $unitkey" + plural(unitvalue)
     }
 
     private fun toStringWithCommasAndAnd(unitsAndCountsFormatted: List<String>): String {

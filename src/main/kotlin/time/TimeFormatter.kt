@@ -17,10 +17,8 @@ class TimeFormatter {
 
     fun timeFormat(input: Int): String {
         if (input == 0) return "none"
-        var timeInWords = ""
 
         fun resetVariables(input: Int) {
-            timeInWords = ""
             remainingSeconds = input
             countUnitsToDisplay = 0
             resultsToFormat
@@ -33,7 +31,9 @@ class TimeFormatter {
         countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
         if (countUnitsToDisplay == 0) return "none"
 
-        resultsToFormat.forEach { timeInWords += formatUnits(it.key, it.value) }
+        val timeInWords = resultsToFormat
+                .map { formatUnits(it.key, it.value) }
+                .joinToString("")
 
         return timeInWords
     }

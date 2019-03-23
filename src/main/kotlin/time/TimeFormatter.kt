@@ -10,7 +10,6 @@ class TimeFormatter {
         const val yearInSeconds = dayInSeconds * 365
 
         var remainingSeconds = 0
-        var countUnitsToDisplay = 0
     }
 
 
@@ -19,12 +18,19 @@ class TimeFormatter {
 
         fun resetVariables(input: Int) {
             remainingSeconds = input
-            countUnitsToDisplay = 0
         }
 
         resetVariables(input)
 
         val resultsToFormat = formatResults()
+
+        var countUnitsToDisplay = 0
+
+        fun formatUnits(unitkey: String, unitvalue: Int): String {
+            if (unitvalue == 0) return ""
+            countUnitsToDisplay -= 1
+            return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
+        }
 
         countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
 
@@ -44,12 +50,6 @@ class TimeFormatter {
                 Pair("minute", calculateUnit(minuteInSeconds)),
                 Pair("second", calculateUnit(second))
         )
-    }
-
-    private fun formatUnits(unitkey: String, unitvalue: Int): String {
-        if (unitvalue == 0) return ""
-        countUnitsToDisplay -= 1
-        return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
     }
 
     private fun plural(unit: Int): String {

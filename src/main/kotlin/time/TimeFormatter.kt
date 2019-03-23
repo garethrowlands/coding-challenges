@@ -17,17 +17,14 @@ class TimeFormatter {
     fun timeFormat(input: Int): String {
         if (input == 0) return "none"
 
-        var resultsToFormat = mapOf(Pair("", 0))
-
         fun resetVariables(input: Int) {
             remainingSeconds = input
             countUnitsToDisplay = 0
-            resultsToFormat
         }
 
         resetVariables(input)
 
-        resultsToFormat = formatResults()
+        val resultsToFormat = formatResults()
 
         countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
         if (countUnitsToDisplay == 0) return "none"

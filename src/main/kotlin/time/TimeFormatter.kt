@@ -43,33 +43,21 @@ class TimeFormatter {
         return calculatedPeriods.filter { it.second != 0 }
     }
 
-    fun formatUnits(unitkey: String, unitvalue: Int): String {
-        return "$unitvalue $unitkey" + plural(unitvalue)
-    }
+    fun formatUnits(unitkey: String, unitvalue: Int): String = "$unitvalue $unitkey" + plural(unitvalue)
 
-    private fun toStringWithCommasAndAnd(unitsAndCountsFormatted: List<String>): String {
-        val totalCountOfUnitsToDisplay = unitsAndCountsFormatted.size
-        val allCountUnitsToDisplayValues = (totalCountOfUnitsToDisplay - 1) downTo 0
-        val timeInWords = unitsAndCountsFormatted
-                .zip(allCountUnitsToDisplayValues)
-                .map { (formattedUnit, countUnitsToDisplay) ->
-                    formattedUnit + formatAndOrComma(countUnitsToDisplay)
-                }
-                .joinToString("")
-        return timeInWords
-    }
+    private fun toStringWithCommasAndAnd(unitsAndCountsFormatted: List<String>): String = unitsAndCountsFormatted
+            .zip((unitsAndCountsFormatted.size - 1) downTo 0)
+            .map { (formattedUnit, countUnitsToDisplay) ->
+                formattedUnit + formatAndOrComma(countUnitsToDisplay)
+            }
+            .joinToString("")
 
-    private fun plural(unit: Int): String {
-        if (unit == 1) return ""
-        return "s"
-    }
+    private fun plural(unit: Int): String = if (unit == 1) "" else "s"
 
-    private fun formatAndOrComma(count: Int): String {
-        return when {
-            count == 0 -> ""
-            count == 1 -> " and "
-            else -> ", "
-        }
+    private fun formatAndOrComma(count: Int): String = when (count) {
+        0 -> ""
+        1 -> " and "
+        else -> ", "
     }
 
 }

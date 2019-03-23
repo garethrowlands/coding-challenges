@@ -27,7 +27,6 @@ class TimeFormatter {
         val resultsToFormat = formatResults()
 
         countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
-        if (countUnitsToDisplay == 0) return "none"
 
         val timeInWords = resultsToFormat
                 .map { formatUnits(it.key, it.value) }

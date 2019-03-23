@@ -15,7 +15,7 @@ class TimeFormatter {
         if (input == 0) return "none"
 
         val resultsToFormat = TimeCalculator(input).formatResults()
-                .filterValues { it!=0 }
+                .filter { it.second!=0 }
 
         fun formatUnits(unitkey: String, unitvalue: Int, countUnitsToDisplay: Int): String {
             return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
@@ -39,8 +39,8 @@ class TimeFormatter {
 
         var remainingSeconds = input
 
-        fun formatResults(): Map<String, Int> {
-            return mapOf(
+        fun formatResults(): List<Pair<String, Int>> {
+            return listOf(
                     Pair("year", calculateUnit(yearInSeconds)),
                     Pair("day", calculateUnit(dayInSeconds)),
                     Pair("hour", calculateUnit(hourInSeconds)),

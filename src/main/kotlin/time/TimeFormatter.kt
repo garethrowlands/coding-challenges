@@ -32,7 +32,8 @@ class TimeFormatter {
             return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
         }
 
-        countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
+        val totalCountOfUnitsToDisplay = resultsToFormat.size
+        countUnitsToDisplay = totalCountOfUnitsToDisplay
 
         val timeInWords = resultsToFormat
                 .map { formatUnits(it.key, it.value) }

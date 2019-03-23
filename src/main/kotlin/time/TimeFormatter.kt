@@ -17,18 +17,20 @@ class TimeFormatter {
         val resultsToFormat = TimeCalculator(input).formatResults()
                 .filter { it.second!=0 }
 
-        fun formatUnits(unitkey: String, unitvalue: Int, countUnitsToDisplay: Int): String {
-            return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
+        fun formatUnits(unitkey: String, unitvalue: Int): String {
+            return "$unitvalue $unitkey" + plural(unitvalue)
         }
 
+        val unitsAndCountsFormatted = resultsToFormat
+                .map { (unit, unitCount) ->
+                    formatUnits(unit, unitCount)
+                }
         val totalCountOfUnitsToDisplay = resultsToFormat.size
         val allCountUnitsToDisplayValues = (totalCountOfUnitsToDisplay-1) downTo 0
-        val unitsAndCounts = resultsToFormat
-                .toList()
+        val timeInWords = unitsAndCountsFormatted
                 .zip(allCountUnitsToDisplayValues)
-        val timeInWords = unitsAndCounts
-                .map { (unit,countUnitsToDisplay)->
-                    formatUnits(unit.first, unit.second, countUnitsToDisplay)
+                .map { (formattedUnit, countUnitsToDisplay)->
+                    formattedUnit + formatAndOrComma(countUnitsToDisplay)
                 }
                 .joinToString("")
 

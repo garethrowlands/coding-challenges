@@ -1,4 +1,4 @@
-package main.kotlin.time
+package time
 
 class TimeFormatter {
 
@@ -12,19 +12,19 @@ class TimeFormatter {
         var timeInWords = ""
         var remainingSeconds = 0
         var countUnitsToDisplay = 0
-        var resultsToFormat = mapOf(Pair("",0))
+        var resultsToFormat = mapOf(Pair("", 0))
     }
 
 
-    fun timeFormat(input: Int?): String {
-            if (input == null) return "none"
+    fun timeFormat(input: Int): String {
+        if (input == 0) return "none"
 
         resetVariables(input)
 
         resultsToFormat = formatResults()
 
         countUnitsToDisplay = resultsToFormat.count { it.value != 0 }
-            if (countUnitsToDisplay == 0) return "none"
+        if (countUnitsToDisplay == 0) return "none"
 
         resultsToFormat.forEach { timeInWords += formatUnits(it.key, it.value) }
 
@@ -34,11 +34,11 @@ class TimeFormatter {
 
     private fun formatResults(): Map<String, Int> {
         return mapOf(
-            Pair("year", calculateUnit(yearInSeconds)),
-            Pair("day", calculateUnit(dayInSeconds)),
-            Pair("hour", calculateUnit(hourInSeconds)),
-            Pair("minute", calculateUnit(minuteInSeconds)),
-            Pair("second", calculateUnit(second))
+                Pair("year", calculateUnit(yearInSeconds)),
+                Pair("day", calculateUnit(dayInSeconds)),
+                Pair("hour", calculateUnit(hourInSeconds)),
+                Pair("minute", calculateUnit(minuteInSeconds)),
+                Pair("second", calculateUnit(second))
         )
     }
 
@@ -51,8 +51,8 @@ class TimeFormatter {
 
     private fun formatUnits(unitkey: String, unitvalue: Int): String {
         if (unitvalue == 0) return ""
-            countUnitsToDisplay -= 1
-            return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
+        countUnitsToDisplay -= 1
+        return "$unitvalue $unitkey" + plural(unitvalue) + formatAndOrComma(countUnitsToDisplay)
     }
 
     private fun plural(unit: Int): String {

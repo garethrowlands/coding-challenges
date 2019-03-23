@@ -1,6 +1,5 @@
-package test.kotlin.time
+package time
 
-import main.kotlin.time.TimeFormatter
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -9,10 +8,9 @@ class TimeFormatterTest {
     val underTest = TimeFormatter()
 
     @Test
-    fun `should return none for an input of null or zero`() {
-            assertEquals("none", underTest.timeFormat(null))
+    fun `should return none for an input zero`() {
             assertEquals("none", underTest.timeFormat(0))
-        }
+    }
 
 
     @Test

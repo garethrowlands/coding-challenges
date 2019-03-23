@@ -25,15 +25,20 @@ class TimeFormatter {
                 .map { (unit, unitCount) ->
                     formatUnits(unit, unitCount)
                 }
-        val totalCountOfUnitsToDisplay = resultsToFormat.size
-        val allCountUnitsToDisplayValues = (totalCountOfUnitsToDisplay-1) downTo 0
+        val timeInWords = toStringWithCommasAndAnd(unitsAndCountsFormatted)
+
+        return timeInWords
+    }
+
+    private fun toStringWithCommasAndAnd(unitsAndCountsFormatted: List<String>): String {
+        val totalCountOfUnitsToDisplay = unitsAndCountsFormatted.size
+        val allCountUnitsToDisplayValues = (totalCountOfUnitsToDisplay - 1) downTo 0
         val timeInWords = unitsAndCountsFormatted
                 .zip(allCountUnitsToDisplayValues)
-                .map { (formattedUnit, countUnitsToDisplay)->
+                .map { (formattedUnit, countUnitsToDisplay) ->
                     formattedUnit + formatAndOrComma(countUnitsToDisplay)
                 }
                 .joinToString("")
-
         return timeInWords
     }
 

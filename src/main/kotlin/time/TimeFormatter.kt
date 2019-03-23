@@ -22,8 +22,7 @@ class TimeFormatter {
     fun timeFormat(input: Int): String {
         if (input == 0) return "none"
 
-        val resultsToFormat = formatResults(input)
-                .filter { it.second!=0 }
+        val resultsToFormat = findTimeUnitsAndMultiples(input)
 
         val unitsAndCountsFormatted = resultsToFormat
                 .map { (unit, unitCount) ->
@@ -33,6 +32,9 @@ class TimeFormatter {
 
         return timeInWords
     }
+
+    private fun findTimeUnitsAndMultiples(input: Int) = formatResults(input)
+            .filter { it.second != 0 }
 
     fun formatUnits(unitkey: String, unitvalue: Int): String {
         return "$unitvalue $unitkey" + plural(unitvalue)

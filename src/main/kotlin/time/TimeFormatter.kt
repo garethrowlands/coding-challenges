@@ -11,12 +11,13 @@ class TimeFormatter {
 
         var remainingSeconds = 0
         var countUnitsToDisplay = 0
-        var resultsToFormat = mapOf(Pair("", 0))
     }
 
 
     fun timeFormat(input: Int): String {
         if (input == 0) return "none"
+
+        var resultsToFormat = mapOf(Pair("", 0))
 
         fun resetVariables(input: Int) {
             remainingSeconds = input

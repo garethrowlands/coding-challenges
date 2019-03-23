@@ -42,24 +42,24 @@ class TimeFormatter {
         return timeInWords
     }
 
-    class TimeCalculator(input: Int) {
+    class TimeCalculator(val input: Int) {
 
-        var remainingSeconds = input
+        val periods = listOf(
+                Pair("year", yearInSeconds),
+                Pair("day", dayInSeconds),
+                Pair("hour", hourInSeconds),
+                Pair("minute", minuteInSeconds),
+                Pair("second", second)
+        )
 
         fun formatResults(): List<Pair<String, Int>> {
-            return listOf(
-                    Pair("year", calculateUnit(yearInSeconds)),
-                    Pair("day", calculateUnit(dayInSeconds)),
-                    Pair("hour", calculateUnit(hourInSeconds)),
-                    Pair("minute", calculateUnit(minuteInSeconds)),
-                    Pair("second", calculateUnit(second))
-            )
-        }
-
-        private fun calculateUnit(unitInSeconds: Int): Int {
-            val calculatedUnits = calculateField(remainingSeconds, unitInSeconds)
-            remainingSeconds = calculateRemainder(remainingSeconds, unitInSeconds)
-            return calculatedUnits
+            var remainingSeconds = input
+            val calculatedPeriods = mutableListOf<Pair<String, Int>>()
+            periods.forEach { (periodName,periodSeconds)->
+                calculatedPeriods.add(periodName to calculateField(remainingSeconds, periodSeconds))
+                remainingSeconds = calculateRemainder(remainingSeconds, periodSeconds)
+            }
+            return calculatedPeriods.toList()
         }
 
         private fun calculateField(input: Int, divisor: Int): Int {

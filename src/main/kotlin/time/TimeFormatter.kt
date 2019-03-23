@@ -36,10 +36,10 @@ class TimeFormatter {
     private fun findTimeUnitsAndMultiples(input: Int): List<Pair<String, Int>> {
         var remainingSeconds = input
         val calculatedPeriods = mutableListOf<Pair<String, Int>>()
-        periods.forEach { (periodName,periodSeconds)->
-                calculatedPeriods.add(periodName to calculateField(remainingSeconds, periodSeconds))
-                remainingSeconds = calculateRemainder(remainingSeconds, periodSeconds)
-            }
+        periods.forEach { (periodName, periodSeconds) ->
+            calculatedPeriods.add(periodName to (remainingSeconds / periodSeconds))
+            remainingSeconds %= periodSeconds
+        }
         return calculatedPeriods.filter { it.second != 0 }
     }
 
@@ -57,14 +57,6 @@ class TimeFormatter {
                 }
                 .joinToString("")
         return timeInWords
-    }
-
-    private fun calculateField(input: Int, divisor: Int): Int {
-        return (input / divisor)
-    }
-
-    private fun calculateRemainder(input: Int, divisor: Int): Int {
-        return (input % divisor)
     }
 
     private fun plural(unit: Int): String {
